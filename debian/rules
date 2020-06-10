@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+#export DH_VERBOSE=1
+ifneq (,$(filter $(DEB_HOST_ARCH), armel m68k mips mipsel powerpc powerpcspe sh4))
+  export DEB_LDFLAGS_MAINT_APPEND=-latomic
+endif
+
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+%:
+	dh $@ --buildsystem=cmake
+
+# meson, not recommended by upstream
+#override_dh_auto_configure:
+#	dh_auto_configure -- -Denable_tests=true -Dexternal_fmt=true -Dlibrary_type=shared
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DSPDLOG_BUILD_EXAMPLE=ON \
+		-DSPDLOG_BUILD_EXAMPLE_HO=ON \
+		-DSPDLOG_BUILD_TESTS=ON \
+		-DSPDLOG_BUILD_TESTS_HO=ON \
+		-DSPDLOG_BUILD_SHARED=ON
+
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	export CTEST_PARALLEL_LEVEL=1 && cd obj-* && ctest -j1
+endif
+
+override_dh_auto_install:
+	rm -f example/logs/.gitignore
+	dh_auto_install
+	find debian -name .gitignore -delete

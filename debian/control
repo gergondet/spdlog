@@ -1,0 +1,51 @@
+Source: spdlog
+Maintainer: Debian Med Packaging Team <debian-med-packaging@lists.alioth.debian.org>
+Uploaders: Michael R. Crusoe <michael.crusoe@gmail.com>
+Section: libdevel
+Priority: optional
+Build-Depends: debhelper-compat (>= 9),
+               cmake,
+               pkg-config,
+               libsystemd-dev,
+               pkg-kde-tools
+Standards-Version: 4.5.0
+Vcs-Browser: https://salsa.debian.org/med-team/spdlog
+Vcs-Git: https://salsa.debian.org/med-team/spdlog.git
+Homepage: https://github.com/gabime/spdlog
+
+Package: libspdlog-dev
+Architecture: any
+Depends: libspdlog1 (= ${binary:Version}),
+         ${misc:Depends}
+Description: Very fast, header only or compiled, C++ logging library
+ Features: Very fast - performance is the primary goal; Headers only; No
+ dependencies - just copy and use; call style using the excellent cppformat
+ library; ostream call style is supported too; Optional extremely fast
+ asynchronous mode - using lockfree queues and other tricks to reach millions
+ of calls/sec; Custom formatting; Multi/Single threaded loggers; Easily
+ extendable with custom log targets (just implement a single function in the
+ sink interface). Severity based filtering - threshold levels can be modified
+ in runtime as well as in compile time.
+ .
+ Various log targets:
+ Rotating log files, Daily log files, Console logging, Linux syslog.
+
+Package: libspdlog1
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: Very fast C++ logging library
+ Features: Very fast - performance is the primary goal; Headers only; No
+ dependencies - just copy and use; call style using the excellent cppformat
+ library; ostream call style is supported too; Optional extremely fast
+ asynchronous mode - using lockfree queues and other tricks to reach millions
+ of calls/sec; Custom formatting; Multi/Single threaded loggers; Easily
+ extendable with custom log targets (just implement a single function in the
+ sink interface). Severity based filtering - threshold levels can be modified
+ in runtime as well as in compile time.
+ .
+ Various log targets:
+ Rotating log files, Daily log files, Console logging, Linux syslog.
+ .
+ This is the compiled version of the library.
