@@ -42,7 +42,7 @@ jobs:
       max-parallel: 1
       fail-fast: false
       matrix:
-        dist: [xenial, bionic, focal]
+        dist: [xenial, bionic]
         arch: [i386, amd64]
         exclude:
           - dist: focal
